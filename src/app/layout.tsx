@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-
+import { Toaster } from "@/components/ui/toaster"
+import { VoiceToggle } from "@/features/VoiceControl/components/VoiceToggle";
+import { VoiceNavigation } from "@/features/VoiceNavigation/VoiceNavigation";
+import { VoiceControlInit } from "@/features/VoiceControl/VoiceControlInit";
+import { VoiceLogger } from "@/features/VoiceLogger/VoiceLogger";
+import { UserProvider } from "@/features/User/UserProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,7 +21,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <VoiceControlInit>
+          <VoiceLogger>
+            <VoiceNavigation>
+              {children}
+              <VoiceToggle />
+            </VoiceNavigation>
+          </VoiceLogger>
+        </VoiceControlInit>
+        <Toaster />
+      </body>
     </html>
   );
 }
